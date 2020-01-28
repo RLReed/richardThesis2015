@@ -1,0 +1,1255 @@
+% Chapter Template
+
+\chapter{Results for 1-D Studies} % Main chapter title
+
+\label{Chapter5}
+
+\lhead{Chapter 5. \emph{Results for 1-D Studies}} 
+
+The goal of this work was to reduce the number of energy degrees of freedom in 
+a given problem to a manageable size without compromising the accuracy of the 
+model.  
+However, the best expansions of a function can only be performed when the 
+function is completely
+known, which, in this case, means the full solution is required before the 
+expansion, which precludes the need for an expansion.  As such, 
+this work focused on two classes of basis expansions.  The first class is the 
+expansions based on the test problem of interest, which provide insight to the 
+best that a basis set can do.  This class is compared to the sets of basis 
+functions that are based on small, yet similar models to the test problem.  
+These small models are quick to solve, and hopefully similar enough to the 
+test problem that an expansion based on the model would be accurate enough for 
+the larger test problem.  Thus, another focus of this work was to identify how 
+similar a model had to be to a given test problem to provide effective basis 
+functions for expansion.
+
+Typically, reactor analysis attempts to compute pin fission densities (or 
+powers) with sub-$1\%$ errors.  This work added an additional buffer, and 
+focused on the minimization of the energy expansion order 
+required to 
+achieve sub-$0.1\%$ maximum relative errors in the fission density. The 
+reference solution in all cases was a full multi-group response matrix solution 
+for the given test problem with consistent angular expansion used throughout.  
+This consistency ensured the observed changes in the solution were functions of only the 
+energy basis used.  In practice, it is 
+not possible to truly separate the effects of space, angle, and energy because 
+the responses in each phase-space variable are coupled, but it is assumed that 
+this treatment will provide adequate insight into the effect of the chosen 
+energy expansion.
+
+With the exception of `DLP' and `mDLP', each curve was generated using a KLT 
+basis with distinct snapshot data, as described previously in Chapter 
+\ref{Chapter4}. 
+The mDLP results represent Comparison of mDLP applied to the 10-pin problem using the 
+            238-group cross-section library.the best case previously observed by 
+\citet{Roberts2014}, which was to use mDLP-1 with the average flux profile from 
+the complete test problem of interest as the shape function.  Therefore, the 
+mDLP 
+results are not practical because the solution for the test problem must be 
+known {\it a priori}.  
+
+% Because the test problems and snapshot models studied were relatively small, 
+% timing studies would provide little insight.  However, for large 2-D or 3-D 
+% models (e.g., assemblies or full cores), the snapshot models (e.g., pincells 
+% or sub-assemblies) should be orders of magnitude less computationally expensive
+% than the full model of interest. 
+
+\section{mDLP Comparison}
+
+\FIGURE{fig:mDLP_44} shows a comparison between practical applications of 
+both versions of mDLP when applied to the 10-pin problem using the 44-group 
+cross-section library.  \FIGURE{fig:mDLP_238} shows the same comparison, 
+but instead for the 238-group cross-section library.  In 
+\FIG{fig:mDLP_238}, both plots show 
+the 
+same data, but the left plot is truncated to order 43 to ease comparison to the 
+44-group data. For these figures, the denotation ``full'' means the shape 
+vector was the flux spectrum averaged over space across all 10 pins.  The 
+denotation ``UO$_2$'' used the flux spectrum from a UO$_2$ pin as the 
+shape vector.  Likewise, the denotation ``MOX'' used the shape vector as the 
+flux spectrum from a MOX pin.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/10-pin/44/rf_plots/phi/%
+        mDLP_comparison_fission-44}
+    \caption{Comparison of mDLP applied to the 10-pin problem using 44-group 
+        cross-section library.}
+    \label{fig:mDLP_44}
+\end{figure*}
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/phi/%
+        mDLP_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/phi/%
+        mDLP_comparison_fission-238}
+    \end{subfigure}
+    \caption{Comparison of mDLP applied to the 10-pin problem using the 
+        238-group cross-section library.}
+    \label{fig:mDLP_238}
+\end{figure*}
+
+All cases of mDLP-2 performed worse than to mDLP-1.  The ``full'' denotation 
+represents the impractical expansion in that the complete problem is required 
+prior to the expansion. The ``UO$_2$'' and ``MOX'' denotations 
+represent more practical expansions as they each require only solving a 
+pincell 
+problem to generate the expansion; however, these two models do not have the 
+physics for one of the fuel types, and thus do not perform as well.  As expected, 
+the ``full'' expansions of 
+mDLP-1 perform the best in general and were chosen as the comparison 
+point for the rest of this work.  Lastly, the increased error at high-order of 
+\FIG{fig:mDLP_238} is due to non-orthogonality of the high-order basis 
+functions due to accumulating roundoff error during orthogonalization.
+
+\section{Energy Spectra for the Test Problems}
+
+The 10-pin test problem was first solved to generate flux profiles to be used 
+for mDLP and KLT expansions.  In \FIG{fig:spectrum-44}, the spatially 
+averaged flux spectra are presented for the 10-pin problem with the 44-group 
+cross-section library.  These averaged spectra were used as the shape vectors for 
+mDLP, while 
+the non spatially-averaged data were used for KLT expansion.  These spectra can 
+be compared to those in \FIG{fig:spectrum-238}, which shows the resulting 
+spectra for the 10-pin problem using the 238-group cross-section library.  As 
+can be observed in each of these figures, the basic shape of the spectrum are 
+nearly the same, with the 10-pin solution lying as average between the two 
+individual pin spectra, UO$_2$ and MOX.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/10-pin/44/rf_plots/%
+        44group_spectra_energy}
+    \caption{Flux spectrum for the 10-pin problem using 44-group cross-section 
+        library}
+    \label{fig:spectrum-44}
+\end{figure*}
+
+%\begin{figure*}[tb]
+%    \centering
+%    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+%    totalheight=0.28\textheight]{Figures/c/10-pin/44/reference_figures/%
+%        44monent0_spectra_energy}
+%\end{figure*}
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/10-pin/238/rf_plots/%
+        238group_spectra_energy}
+    \caption{Flux spectrum for the 10-pin problem using 238-group cross-section 
+        library}
+    \label{fig:spectrum-238}
+\end{figure*}
+
+%\begin{figure*}[tb]
+%    \centering
+%    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+%    totalheight=0.28\textheight]{Figures/c/10-pin/238/reference_figures/%
+%        238monent0_spectra_energy}
+%\end{figure*}
+
+\FIGURE{fig:spectrum0-238} shows the spatially averaged spectrum for Core 0 
+of the BWR test problem, where the spectra denoted ``assay1'' or 
+``assay2'' are the spatially averaged energy spectra for each assembly 
+in Core-0 of the BWR test problem.  It is apparent that these spectra 
+do not differ as much as the spectra associated with the 10-pin 
+problem.  As will be shown later, this 
+leads to improved performance of mDLP because there is not as much 
+variation between the various parts in the model.  The spectra for Core-1, 
+shown in \FIG{fig:spectrum1-238}, is similar to that of Core-0.  However, 
+the spectra difference becomes more 
+pronounced when observing the spectra for Core-2, shown in Fig. 
+\ref{fig:spectrum2-238}.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/238/0/rf_plots/%
+        238group_spectra_energy}
+    \caption{Flux spectrum for the BWR-Core 0 problem using 238-group 
+        cross-section library}
+    \label{fig:spectrum0-238}
+\end{figure*}
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/238/1/rf_plots/%
+        238group_spectra_energy}
+    \caption{Flux spectrum for the BWR-Core 1 problem using 238-group 
+        cross-section library}
+    \label{fig:spectrum1-238}
+\end{figure*}
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/238/2/rf_plots/%
+        238group_spectra_energy}
+    \caption{Flux spectrum for the BWR-Core 2 problem using 238-group 
+        cross-section library}
+    \label{fig:spectrum2-238}
+\end{figure*}
+
+\section{10-Pin Test Problem}
+
+As previously discussed, the KLT was applied to the 10-pin test problem using 
+several snapshot models.  Additionally, there were several kinds of snapshots 
+taken 
+from each snapshot model i.e., scalar flux ($\phi$), leftward partial current 
+($J_{\text{left}}$), and higher-order angular 
+moments.  These snapshots were combined in various ways for the 10-pin problem 
+and are presented in this section.  Each of the plots in this section are shown 
+up to order $G-1$, where $G$ is the number of groups in the cross-section 
+library.  The last order is omitted because orthogonal basis functions are 
+exact to machine precision when using a complete expansion.  Some of the DLP and 
+mDLP results will not appear to converge nearing the final order, which is due 
+to non-orthogonality of the high orders from accumulating roundoff error in the 
+orthogonalization.  Furthermore, since the problem is non-linear, the error is 
+not guaranteed to decrease with increasing expansion order, however, the error 
+should decrease on the average with increasing expansion order.
+
+\subsection{44-Group Results}
+
+\FIGURE{fig:10-pin-flux-only} shows the performance of various formulations 
+of the KLT as applied to the 10-pin problem.  The snapshots used for the figure 
+came from only the 44-group scalar flux.  When using snapshots from the full 
+assembly model (10-pin), 
+    the relative error fell below the 0.1$\%$ threshold at an energy order of 
+    approximately 12, while more practical models, e.g., 
+Combined-Pin, require approximately order 20 to reach the goal.  The results of 
+the 
+Combined-Pins model are far from 
+the goal of using approximately five energy degrees of freedom to reach the 
+error goal.  
+Essentially all of the KLT formulations outperformed mDLP-1 with the 
+exception of the 
+individual pins (UO$_2$ and MOX), which is expected as those models lack 
+physics 
+for half the problem space.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/10-pin/44/rf_plots/phi/%
+        energy_basis_comparison_fission-44}
+    \caption{Performance of the KLT when applied to the 10-pin test problem 
+        with snapshots of only $\phi$.}
+    \label{fig:10-pin-flux-only}
+\end{figure*}
+
+\FIGURE{fig:10-pin-partial-only} shows the performance of the KLT using 
+snapshots of only $J_{\text{left}}$ from the 44-group snapshot 
+models. As shown, the best case KLT can reach the goal by approximately 
+order 6, while more practical models, e.g., Combined-Pin, require approximately 
+order 20 to 
+reach the error goal.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/10-pin/44/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Performance of the KLT when applied to the 10-pin test problem 
+        with snapshots of only $J_{\text{left}}$.}
+    \label{fig:10-pin-partial-only}
+\end{figure*}
+
+\FIGURE{fig:10-pin-combined} shows the results of using the combined 
+snapshots of $\phi$ and $J_{\text{left}}$ each from the 
+44-group models.  With this approach, the best case still reaches the goal at 
+about order 6, but the practical case of Combined-Pins was improved to 
+achieving the goal 
+by 
+order 15.  In general, including both sets of snapshots improves the 
+performance 
+because KLT can extract the most important information from both sets and 
+create highly effective basis functions.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/10-pin/44/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Performance of the KLT when applied to the 10-pin test problem 
+        with snapshots of both $\phi$ and leftward partial current.}
+    \label{fig:10-pin-combined}
+\end{figure*}
+
+\subsection{238-Group Results}
+
+Similar to the 44-group section, the figures in this section will be presented 
+to showcase how the choice of snapshots impacts the performance of the KLT 
+applied 
+to the 10-pin problem using the 238-group cross-section library. All of the 
+figures in 
+this section include side-by-side comparisons of the same data, one 
+shown to 43th order, while the other presents the full spectrum up to 
+237th order.  
+
+\FIGURE{fig:10-pin-238phi} presents the results from using 
+snapshots of only $\phi$ in the basis generation.  The best expansion 
+requires approximately order 14, while the Combined-Pins case requires 
+approximately order 24 to remain under the error goal.  The individual pin 
+models do not perform well, as is expected, as each lacks the information from 
+an 
+entire type of fuel pin.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/phi/%
+            energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/phi/%
+            energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, 10-pin test problem using snapshots 
+    of only $\phi$}
+    \label{fig:10-pin-238phi}
+\end{figure*}
+
+Presented in \FIG{fig:10-pin-238partial} are the results from using 
+snapshots of only $J_{\text{left}}$ for basis generation. The 
+impractical case of the 10-pin model requires approximately order 6 to reach 
+the error goal, while the practical Combined-Pins model requires approximately 
+order 22 to reach the error goal.  These results are an improvement for the 
+10-pin model over using $\phi$ snapshots. However, the Combined-Pins model 
+results are relatively unchanged as compared to using $\phi$ snapshots.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/10-pin/238/rf_plots/partial/%
+            partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/10-pin/238/rf_plots/partial/%
+            partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, 10-pin test problem using snapshots 
+        of only $J_{\text{left}}$}
+    \label{fig:10-pin-238partial}
+\end{figure*}
+
+\FIGURE{fig:10-pin-238combined} shows the results from combining 
+together the snapshots of both $\phi$ and $J_{\text{left}}$. In this case, the 
+10-pin model requires approximately order 10 to 
+reach the goal, while the Combined-Pins model requires approximately order 14 
+to 
+reach the goal.  As compared to the 44-group data, these data from 238-group do 
+not improve to the same degree when $\phi$ and $J_{\text{left}}$ 
+snapshots are combined.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/partial/%
+            partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/partial/%
+            partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, 10-pin test problem using snapshots 
+        of both $\phi$ and $J_{\text{left}}$}
+    \label{fig:10-pin-238combined}
+\end{figure*}
+
+Note that when comparing the cases between the 44-group and 238-group results, 
+basis functions from a given type of model (e.g., Combined Pin) perform 
+similarly despite the number of groups.  It appears that for simple problems, 
+KLT basis sets may contain a relatively constant amount of information despite increasing 
+group size, 
+but more effort is required to confirm this trend.
+
+\section{BWR Test Problem}
+
+The BWR test problem refers to the grouping of three 
+different core configurations 
+as discussed in Chapter \ref{Chapter4}.  Each of the configurations 
+was used with both 44-group and 238-group cross-section libraries.  The 
+configurations were designed with increasing inhomogeneity leading to more difficult 
+models. The difficulty results in a larger error for the same energy order while progressing 
+    through configurations. Thus, the performance of 
+each expansion is expected to worsen with increasing configuration number.  
+
+For each configuration, the Full-Core model is expected to perform the best, as 
+it uses all available unique snapshots for basis generation, while the 
+Combined-Assemblies and the Combined-Pins models represent practical cases for 
+basis generation. 
+ Note that for this test problem, mDLP and DLP perform quite well, which is 
+due to the relatively small difference between the spatially averaged 
+flux profile as discussed previously.  Again, the mDLP results presented here 
+used the spatially averaged flux profile from the Full-Core model as the shape 
+vector, and, thus, do not represent a practical performance of mDLP, but rather 
+should be compared to the Full-Core KLT results.
+
+\subsection{Configuration 0}
+
+\subsubsection{44-Group Results}
+
+As \FIG{fig:BWR0_phi} shows, it takes approximately order 6 for the 
+Full-Core model to reach the goal of sub-0.1\% relative error in the fission 
+density.  Whereas the practical Combined models require approximately order 15 
+to 
+reach the goal.  These results are when using snapshots of only $\phi$.  
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/0/rf_plots/phi/%
+        energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 0 test problem using 
+        snapshots of only $\phi$}
+    \label{fig:BWR0_phi}
+\end{figure*}
+
+Many of the results are improved if snapshots of $J_{\text{left}}$ are 
+used for basis generation with the KLT, as shown in Fig. 
+\ref{fig:BWR0_partial}.  The Full-Core model requires approximately order 4, 
+while the Combined-Assemblies model requires approximately order 10 to reach 
+the goal.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/bwrcore/44/0/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 0 test problem using 
+        snapshots of only $J_{\text{left}}$}
+    \label{fig:BWR0_partial}
+\end{figure*}
+
+The best results are obtained when snapshots of both $\phi$ and 
+$J_{\text{left}}$ are combined together to generate the KLT basis.  
+These results are presented in \FIG{fig:BWR0_combined}.  The Full-Core 
+model requires order 4 to reach the error goal.  The Combined-Assemblies 
+reached the goal at approximately order 10.  Finally, the Combined-Pins results 
+are greatly improved, and require approximately order 13 to reach the goal when 
+using both types of snapshots.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/0/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 0 test problem using 
+        snapshots of both $\phi$ and $J_{\text{left}}$}
+    \label{fig:BWR0_combined}
+\end{figure*}
+
+\subsubsection{238-Group Results}
+
+As before, the results in this section are presented as side-by-side 
+comparisons of the 238-group data.  The left side is shown to only order 43 to 
+ease comparison to the 44-group data, while the right side shows up to 
+237th order for the 238-group data.
+
+\FIGURE{fig:BWR0_phi-238} shows the results from using snapshots of only the 
+$\phi$ for the 238-group cross-section library.  The impractical model of 
+Full-Core requires approximately order 12 to reach the goal, while the 
+Combined-Assemblies case requires approximately order 21.  Each of these models 
+also 
+reach the second goal of an order of magnitude reduction in the required energy 
+degrees of freedom.  The Combined-Pins model does not reach the error goal 
+within the order goal.  
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/0/rf_plots/phi/%
+        energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/0/rf_plots/phi/%
+        energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 0 test problem using 
+        snapshots of only $\phi$}
+    \label{fig:BWR0_phi-238}
+\end{figure*}
+
+The required orders for most cases is reduced when using snapshots of only 
+$J_{\text{left}}$ to generate the basis as shown in Fig. 
+\ref{fig:BWR0_partial-238}.  The Full-Core model requires approximately order 3 
+to reach the goal, while the Combined-Assemblies model requires approximately 
+order 12.  However, the performance of the Combined-Pins model is actually 
+worse 
+as compared to using $\phi$ snapshots.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/s/bwrcore/238/0/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/s/bwrcore/238/0/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 0 test problem using 
+        snapshots of only $J_{\text{left}}$}
+    \label{fig:BWR0_partial-238}
+\end{figure*}
+
+Once again, the best results are obtained by combining the snapshots of the 
+$\phi$ and $J_{\text{left}}$ together as shown in Fig. 
+\ref{fig:BWR0_combined-238}.  The required order for the Full-Core model 
+remains at about 3, and the Combined-Assemblies model requires approximately 
+order 14 to reach the error goal.  The Combined-Pins model is greatly improved 
+and reaches the error goal at about order 20.  When using both types of 
+snapshots, the Combined-Pins model reached the required order goal of an order 
+of magnitude reduction.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/0/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/0/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 0 test problem using 
+        snapshots of both $\phi$ and $J_{\text{left}}$}
+    \label{fig:BWR0_combined-238}
+\end{figure*}
+
+\subsection{Configuration 1}
+
+\subsubsection{44-Group Results}
+
+\FIGURE{fig:BWR1_phi} shows that approximately order 7 is required for the 
+Full-Core model to reach the error threshold.  However, the practical,  
+Combined-Assemblies and Combined-Pins models require approximately order 17 and 
+order 26 to reach the error threshold.  These results are when using snapshots 
+of 
+only $\phi$.  Both of the Combined models are far from the order goal 
+of approximately 5 order required to meet the error threshold.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/1/rf_plots/phi/%
+        energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 1 test problem using 
+        snapshots of only $\phi$}
+    \label{fig:BWR1_phi}
+\end{figure*}
+
+Many of the results are improved when snapshots of $J_{\text{left}}$ are used 
+for basis generation with the KLT instead of $\phi$. 
+ These results are shown in \FIG{fig:BWR1_partial}.  The Full-Core 
+model requires approximately order 7, while the Combined-Assemblies model 
+requires approximately order 21 to reach the error goal.  The Combined-Pins 
+model 
+require approximately order 27.  
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/bwrcore/44/1/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 1 test problem using 
+        snapshots of only $J_{\text{left}}$}
+    \label{fig:BWR1_partial}
+\end{figure*}
+
+The best results are obtained when snapshots of both $\phi$ and 
+$J_{\text{left}}$ are combined together to generate the KLT basis.  
+These results are presented in \FIG{fig:BWR1_combined}.  The Full-Core 
+model requires order 7 to reach the error goal.  Both the Combined-Assemblies 
+and Combined-Pins models reached the goal at approximately order 19, when 
+using both types of snapshots.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/1/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 1 test problem using 
+        snapshots of both $\phi$ and $J_{\text{left}}$}
+    \label{fig:BWR1_combined}
+\end{figure*}
+
+\subsubsection{238-Group Results}
+
+\FIGURE{fig:BWR1_phi-238} shows the results from using snapshots of only 
+$\phi$ for the 238-group cross-section library.  The impractical model of 
+Full-Core requires approximately order 13 to reach the goal, while the 
+Combined-Assemblies case requires approximately order 26.  Each of these models 
+also 
+reach the second goal of an order of magnitude reduction in the required energy 
+degrees of freedom.  The Combined-Pins model does not reach the error goal 
+within the order goal.  
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/1/rf_plots/phi/%
+        energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/1/rf_plots/phi/%
+        energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 1 test problem using 
+        snapshots of only $\phi$}
+    \label{fig:BWR1_phi-238}
+\end{figure*}
+
+Again, the required orders for most cases is reduced when using snapshots of 
+only $J_{\text{left}}$ as shown in \FIG{fig:BWR1_partial-238}.  
+The Full-Core model requires approximately order 8 to reach the goal, while the 
+Combined-Assemblies model requires approximately order 9.  The Combined-Pins 
+model  reaches the error goal by approximately order 26.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/s/bwrcore/238/1/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/s/bwrcore/238/1/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 1 test problem using 
+        snapshots of only $J_{\text{left}}$}
+    \label{fig:BWR1_partial-238}
+\end{figure*}
+
+Combining the two types of snapshots together has little effect at low orders 
+for this configuration as shown in \FIG{fig:BWR1_combined-238}.  The 
+required order for the full core model remains at about 8, and the 
+Combined-Assemblies model requires approximately order 15 to reach the error 
+goal.  The 
+Combined-Pins model is greatly improved and reaches the error goal at about 
+order 
+26.  It appears that for this configuration $\phi$ actually worsens the 
+expansion.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/1/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/1/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 1 test problem using 
+        snapshots of both $\phi$ and $J_{\text{left}}$}
+    \label{fig:BWR1_combined-238}
+\end{figure*}
+
+\subsection{Configuration 2}
+
+\subsubsection{44-Group Results}
+
+The final configuration of the BWR test problem leads to results very similar to 
+the previous two configurations, but requires slightly higher-order expansion to achieve the 
+error goal, as expected.  As \FIG{fig:BWR2_phi} shows, it takes 
+approximately order 12 for the Full-Core model to reach the goal of sub-0.1\% 
+relative error in the fission density.  Whereas the practical Combined models 
+take approximately order 18 to reach the goal.  These results are when using 
+snapshots of only $\phi$.  The Combined-Pins model reaches the goal at 
+approximately order 30.  None of these models can achieve the order goal of 
+approximately 5 orders for the 44-group test problems.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/2/rf_plots/phi/%
+        energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 2 test problem using 
+        snapshots of only $\phi$}
+    \label{fig:BWR2_phi}
+\end{figure*}
+
+Some of the results are slightly improved if instead snapshots of 
+$J_{\text{left}}$ are used for basis generation with the KLT, as \FIG{fig:BWR2_partial} shows.  The 
+Full-Core model requires approximately order 10, 
+while the Combined-Assemblies model requires approximately order 24 to reach 
+the goal, which is worse than the expansion using snapshots of $\phi$.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/bwrcore/44/2/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 2 test problem using 
+        snapshots of only $J_{\text{left}}$}
+    \label{fig:BWR2_partial}
+\end{figure*}
+
+The best expansions for the practical cases are obtained when snapshots of both 
+$\phi$ and $J_{\text{left}}$ are combined together to generate 
+the KLT basis.  These results are presented in \FIG{fig:BWR2_combined}.  
+The Full-Core model requires order 12 to reach the error goal.  The 
+Combined-Assemblies and the Combined-Pins models reached the goal at 
+approximately order 
+19.  
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/2/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \caption{Relative error for the 44-group, BWR-Core 2 test problem using 
+        snapshots of both $\phi$ and $J_{\text{left}}$}
+    \label{fig:BWR2_combined}
+\end{figure*}
+
+\subsubsection{238-Group Results}
+
+\FIGURE{fig:BWR2_phi-238} shows the results from using snapshots of only the 
+$\phi$ for the 238-group cross-section library.  The impractical model of 
+Full-Core requires approximately order 22 to reach the goal, while the 
+Combined-Assemblies case requires approximately order 31.  Each of these models 
+also 
+reach the second goal of an order of magnitude reduction in the required energy 
+degrees of freedom.  The Combined-Pins model does not reach the error threshold 
+within the order goal.  
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/2/rf_plots/phi/%
+        energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/2/rf_plots/phi/%
+        energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 2 test problem using 
+        snapshots of only $\phi$}
+    \label{fig:BWR2_phi-238}
+\end{figure*}
+
+The results for using snapshots of $J_{\text{left}}$ for basis 
+generation are shown in \FIG{fig:BWR2_partial-238}.  The Full-Core model 
+requires approximately order 10 to reach the goal, while the 
+Combined-Assemblies 
+model requires approximately order 36.  The performance of both of 
+the Combined models are worse than for the case of $\phi$ snapshots.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/s/bwrcore/238/2/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/s/bwrcore/238/2/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 2 test problem using 
+        snapshots of only $J_{\text{left}}$}
+    \label{fig:BWR2_partial-238}
+\end{figure*}
+
+Again, the best results are obtained by combining the snapshots of the 
+$\phi$ and $J_{\text{left}}$ together as \FIG{fig:BWR2_combined-238} shows.  The required order 
+for the full core model is 
+about 9, and the Combined-Assemblies model requires approximately order 27 to 
+reach the error goal.  The Combined-Pins model is greatly improved and reaches 
+the error goal at about order 27.  Clearly from this section, it is difficult 
+to achieve an order of magnitude reduction in the required energy degrees of 
+freedom and still reach the error goal for configuration 2.  The inhomogeneity 
+simply requires more information to model accurately.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/2/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.238\textheight]{Figures/c/bwrcore/238/2/rf_plots/partial/%
+        partial_energy_basis_comparison_fission-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 2 test problem using 
+        snapshots of both $\phi$ and $J_{\text{left}}$}
+    \label{fig:BWR2_combined-238}
+\end{figure*}
+
+\section{Higher-Order Angular Moments}
+
+After considering the effect of $\phi$ and $J_{\text{left}}$ snapshots, 
+the next step is to compare snapshots of higher-order angular moments.  These 
+snapshots are generated by an angular expansion by Jacobi basis functions of 
+the angular flux.  In 
+this case, the zeroth order is exactly $J_{\text{left}}$, while the 
+higher moments do not have direct physical corollaries.  These snapshots were 
+used for each test problem for basis generation.
+
+\subsection{10-pin Problem}
+
+In this section,  The performance of using additional moments is compared for 
+only the Full 10-pin model, as the resulting conclusions are the same for the 
+excluded figures.  Each of the figures in this 
+section are presented with only a single snapshot model that uses various 
+schemes to combine the snapshots as described for each figure.
+
+\subsubsection{44-Group Results}
+
+The individual performance of each set of snapshots for the 44-group 10-pin 
+test problem are presented in \FIG{fig:10-pin_10-pin-single}.  The 
+performance of $\phi$ and $J_{\text{left}}$ (0th moment) snapshots are 
+identical to the results presented previously.  As shown, the higher-order 
+moment snapshots do not perform well, and require at least 30th order to reach 
+the error threshold.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/10-pin/44/rf_plots/angular/%
+        angular_comparison_fission_10-pin-44}
+    \caption{Relative error for 44-group, 10-pin test problem using 
+        snapshots from the 10-pin model.  Sets of snapshots are used 
+        separately for basis generation}
+    \label{fig:10-pin_10-pin-single}
+\end{figure*}
+
+When used together with the snapshots of $\phi$ and $J_{\text{left}}$, the 
+results are presented in \FIG{fig:10-pin_10-pin-combined}.  The 
+performance of the higher-order moments are nearly identical to that of 
+combining only $\phi$ and $J_{\text{left}}$, which is labeled as 0th moment in 
+the figure.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/10-pin/44/rf_plots/angular/%
+        angular_comparison_fission_10-pin-44}
+    \caption{Relative error for 44-group, 10-pin test problem using 
+        snapshots from the 10-pin model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:10-pin_10-pin-combined}
+\end{figure*}
+
+\subsubsection{238-Group Results}
+
+This section presents the results of using the higher-order moment snapshots 
+for the 238-group 10-pin test problem.  All of the figures in 
+this section are shown with side-by-side comparisons of the same data, one 
+shown to 43th order, while the other presents the full spectrum up to 
+237$^{th}$ order.  \FIGURE{fig:10-pin_10-pin-single-238} presents the results 
+from using the various sets of snapshots separately.  Similarly to the 44-group 
+results, the higher-order moment snapshots do not perform as well as the 
+results of $\phi$ and $J_{\text{left}}$ snapshots.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/10-pin/238/rf_plots/angular/%
+            angular_comparison_fission_10-pin-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/10-pin/238/rf_plots/angular/%
+            angular_comparison_fission_10-pin-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, 10-pin test problem using 
+        snapshots from the 10-pin model.  Sets of snapshots are used 
+        separately for basis generation}
+    \label{fig:10-pin_10-pin-single-238}
+\end{figure*}
+
+\FIGURE{fig:10-pin_10-pin-combined-238} presents the results of combining the 
+various sets of snapshots.  The success of the snapshots of higher-order 
+moments do not significantly change the results from combining only the 
+snapshots of $\phi$ and $J_{\text{left}}$.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/angular/%
+            angular_comparison_fission_10-pin-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/10-pin/238/rf_plots/angular/%
+            angular_comparison_fission_10-pin-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, 10-pin test problem using 
+        snapshots from the 10-pin model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:10-pin_10-pin-combined-238}
+\end{figure*}
+
+\section{BWR Test Problem}
+
+In this section,  The performance of using additional moments is compared for 
+only the Full-Core model.  Each of the figures in this 
+section are presented with only a single snapshot model that uses various 
+schemes to combine the snapshots as described for each figure.  The performance 
+of the higher-order moment snapshots are compared between each of the three 
+core configurations as discussed previously.
+
+\subsection{Configuration 0}
+
+\subsubsection{44-Group Results}
+
+The individual performance of each set of snapshots for the 44-group BWR-Core 0
+test problem are presented in \FIG{fig:BWR0-core-single}.  The 
+performance of $\phi$ and $J_{\text{left}}$ (0th moment) snapshots are 
+identical to the results presented previously.  As shown, the higher-order 
+moment snapshots perform similarly to snapshots of $\phi$.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/bwrcore/44/0/rf_plots/angular/%
+        angular_comparison_fission_core-44}
+    \caption{Relative error for 44-group, BWR-Core 0 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are 
+        used separately for basis generation}
+    \label{fig:BWR0-core-single}
+\end{figure*}
+
+When used together with the snapshots of $\phi$ and $J_{\text{left}}$, the 
+results are presented in \FIG{fig:BWR0-core-combined}.  The 
+performance of the higher-order moments are nearly identical to that of 
+combining only $\phi$ and $J_{\text{left}}$, which is labeled as 0th moment in 
+the figure.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/0/rf_plots/angular/%
+        angular_comparison_fission_core-44}
+    \caption{Relative error for 44-group, BWR-Core 0 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:BWR0-core-combined}
+\end{figure*}
+
+\subsubsection{238-Group Results}
+
+This section presents the results of using the higher-order moment snapshots 
+for the 238-group BWR-Core 0 test problem.  All of the figures in 
+this section are shown with side-by-side comparisons of the same data, one 
+shown to 43th order, while the other presents the full spectrum up to 
+237$^{th}$ order.  \FIGURE{fig:BWR0-core-single-238} presents the results 
+from using the various sets of snapshots separately.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/bwrcore/238/0/rf_plots/angular/%
+            angular_comparison_fission_core-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/bwrcore/238/0/rf_plots/angular/%
+            angular_comparison_fission_core-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 0 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are 
+        used separately for basis generation}
+    \label{fig:BWR0-core-single-238}
+\end{figure*}
+
+\FIGURE{fig:BWR0-core-combined-238} presents the results of combining the 
+various sets of snapshots.  The success of the snapshots of higher-order 
+moments do not significantly change the results from combining only the 
+snapshots of $\phi$ and $J_{\text{left}}$.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/bwrcore/238/0/rf_plots/angular/%
+            angular_comparison_fission_core-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/bwrcore/238/0/rf_plots/angular/%
+            angular_comparison_fission_core-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 0 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:BWR0-core-combined-238}
+\end{figure*}
+
+\subsection{Configuration 1}
+
+\subsubsection{44-Group Results}
+
+The individual performance of each set of snapshots for the 44-group BWR-Core 0
+test problem are presented in \FIG{fig:BWR1-core-single}.  The 
+performance of $\phi$ and $J_{\text{left}}$ snapshots are 
+identical to the results presented previously.  As shown, the higher-order 
+moment snapshots perform similarly to snapshots of $\phi$.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/bwrcore/44/1/rf_plots/angular/%
+        angular_comparison_fission_core-44}
+    \caption{Relative error for 44-group, BWR-Core 1 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are 
+        used separately for basis generation}
+    \label{fig:BWR1-core-single}
+\end{figure*}
+
+When used together with the snapshots of $\phi$ and $J_{\text{left}}$, the 
+results are presented in \FIG{fig:BWR1-core-combined}.  The 
+performance of the higher-order moments are nearly identical to that of 
+combining only $\phi$ and $J_{\text{left}}$, which is labeled as 0th moment in 
+the figure.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/1/rf_plots/angular/%
+        angular_comparison_fission_core-44}
+    \caption{Relative error for 44-group, BWR-Core 1 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:BWR1-core-combined}
+\end{figure*}
+
+\subsubsection{238-Group Results}
+
+This section presents the results of using the higher-order moment snapshots 
+for the 238-group BWR-Core 0 test problem.  All of the figures in 
+this section are shown with side-by-side comparisons of the same data, one 
+shown to 43th order, while the other presents the full spectrum up to 
+237$^{th}$ order.  \FIGURE{fig:BWR1-core-single-238} presents the results 
+from using the various sets of snapshots separately.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/bwrcore/238/1/rf_plots/angular/%
+            angular_comparison_fission_core-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/bwrcore/238/1/rf_plots/angular/%
+            angular_comparison_fission_core-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 1 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are 
+        used separately for basis generation}
+    \label{fig:BWR1-core-single-238}
+\end{figure*}
+
+\FIGURE{fig:BWR1-core-combined-238} presents the results of combining the 
+various sets of snapshots.  The success of the snapshots of higher-order 
+moments do not significantly change the results from combining only the 
+snapshots of $\phi$ and $J_{\text{left}}$.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/bwrcore/238/1/rf_plots/angular/%
+            angular_comparison_fission_core-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/bwrcore/238/1/rf_plots/angular/%
+            angular_comparison_fission_core-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 1 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:BWR1-core-combined-238}
+\end{figure*}
+
+\subsection{Configuration 2}
+
+\subsubsection{44-Group Results}
+
+The individual performance of each set of snapshots for the 44-group BWR-Core 0
+test problem are presented in \FIG{fig:BWR2-core-single}.  The 
+performance of $\phi$ and $J_{\text{left}}$ snapshots are 
+identical to the results presented previously.  As shown, the higher-order 
+moment snapshots perform similarly to snapshots of $\phi$.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/s/bwrcore/44/2/rf_plots/angular/%
+        angular_comparison_fission_core-44}
+    \caption{Relative error for 44-group, BWR-Core 2 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are 
+        used separately for basis generation}
+    \label{fig:BWR2-core-single}
+\end{figure*}
+
+When used together with the snapshots of $\phi$ and $J_{\text{left}}$, the 
+results are presented in \FIG{fig:BWR2-core-combined}.  The 
+performance of the higher-order moments are nearly identical to that of 
+combining only $\phi$ and $J_{\text{left}}$, which is labeled as 0th moment in 
+the figure.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/c/bwrcore/44/2/rf_plots/angular/%
+        angular_comparison_fission_core-44}
+    \caption{Relative error for 44-group, BWR-Core 2 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:BWR2-core-combined}
+\end{figure*}
+
+\subsubsection{238-Group Results}
+
+This section presents the results of using the higher-order moment snapshots 
+for the 238-group BWR-Core 0 test problem.  All of the figures in 
+this section are shown with side-by-side comparisons of the same data, one 
+shown to 43th order, while the other presents the full spectrum up to 
+237$^{th}$ order.  \FIGURE{fig:BWR2-core-single-238} presents the results 
+from using the various sets of snapshots separately.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/bwrcore/238/2/rf_plots/angular/%
+            angular_comparison_fission_core-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/s/bwrcore/238/2/rf_plots/angular/%
+            angular_comparison_fission_core-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 2 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are 
+        used separately for basis generation}
+    \label{fig:BWR2-core-single-238}
+\end{figure*}
+
+\FIGURE{fig:BWR2-core-combined-238} presents the results of combining the 
+various sets of snapshots.  The success of the snapshots of higher-order 
+moments do not significantly change the results from combining only the 
+snapshots of $\phi$ and $J_{\text{left}}$.
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/bwrcore/238/2/rf_plots/angular/%
+            angular_comparison_fission_core-44}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+        totalheight=0.238\textheight]{Figures/c/bwrcore/238/2/rf_plots/angular/%
+            angular_comparison_fission_core-238}
+    \end{subfigure}
+    \caption{Relative error for 238-group, BWR-Core 2 test problem using 
+        snapshots from the Full-Core model.  Sets of snapshots are combined 
+        together for basis generation}
+    \label{fig:BWR2-core-combined-238}
+\end{figure*}
+
+\section{Conclusion}
+
+As the 1-D test problems show, KLT basis sets are highly effective.  Nearly all the of the KLT 
+basis sets outperform the mDLP and DLP basis sets, which is expected due to the amount of 
+information captured by the KLT.  In nearly all cases, the best performing KLT basis functions are 
+those based on snapshots of $\phi$ combined with snapshots of $J_{\text{left}}$.  
+
+It is apparent that including additional information in the snapshots will improve the results only 
+if the new information is distinct from the current set of snapshots.  The higher-order moments did 
+not improve the overall performance of the basis set because the information contained in the 
+higher-order moments was already captured in the 0th moments ($J_{\text{left}}$).
+
+Furthermore, successful KLT basis functions contain all available material types.  As the results 
+from the 10-pin test problem show, disregarding snapshots from a fuel type leads to poor expansions 
+of the actual solution.  
+
+Finally, as expected, more difficult problems require a larger number of basis functions for an 
+expansion of the same relative error.  As the difficulty of the BWR models increases, the number of 
+required degrees of freedom to meet the goal were also increased.  Thus, the success of the KLT is 
+problem dependent.

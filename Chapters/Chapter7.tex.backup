@@ -1,0 +1,115 @@
+% Chapter Template
+
+\chapter{Conclusions and Future Work} % Main chapter title
+
+\label{Chapter7}
+
+\lhead{Chapter 7. \emph{Conclusions}}
+
+
+\section{Summary}
+
+Once again, the overarching goal of this work was to find an effective basis 
+with which to expand the energy variable for the eigenvalue response matrix 
+method such that the required energy degrees of freedom are reduced by an order 
+of magnitude while achieving sub-$0.1\%$ relative error in the pin powers or 
+fission densities,  To this end, the Karhunen Lo\'{e}ve Transform was explored 
+to create the set of vectors for the energy variable.  The KLT basis was 
+compared to the discrete Legendre polynomials and the modified DLPs.  
+
+To base the comparison, three test problems were constructed including a (1) 1-D 
+10-pin model representative of a UO$_2$-MOX junction, (2) a 1-D, 70-pin model 
+representative of a BWR core, and (3) a 2-D model based on the C5G7 benchmark 
+expanded to 44 energy groups.  The difficulty of the models increased in the 
+order of presentation, thus the 10-pin test problem was the simplest and the 
+C5G7 benchmark was the most difficult.  This difficulty manifested in an 
+increase in the number of required energy degrees of freedom necessary to 
+achieve sub-$0.1\%$ maximum errors relative to a full multigroup solution of 
+the particular test problem.
+
+In nearly all cases, the KLT basis outperformed the mDLP and DLP bases for ERMM 
+energy expansions.  This result is not surprising due to the method of 
+constructing the KLT basis.  The KLT identifies the most common characteristics 
+of a set of functions (or snapshots in the case of this work) and creates the 
+basis functions from those characteristics. KLT is ordered such that the most 
+important information of a problem-space is contained in the low-order 
+basis vectors, thus in general the KLT can achieve high-fidelity expansions 
+with few orders.  The downside to KLT is the requirement of initial data with 
+which to create the basis vectors.  Since the actual solution is deemed 
+unavailable (because requiring the solution to approximate the solution is a 
+waste of effort for this application), a number of representative snapshot 
+models were constructed for each of the test problems.  
+
+The choice of snapshot model greatly effects the effectiveness of a KLT basis, 
+and thus the results of an expansion in that basis.  In general, snapshot 
+models should be computationally quick to solve, yet similar to the test 
+problem.  The results presented in the body of this work indicate that to be 
+effective, a snapshot model does not need to be a reduced version of the test 
+problem, but the snapshot model should contain features consistent with the 
+test problem.  
+
+For example, consider the results of the 10-pin snapshot 
+models.  The results of the UO$_2$ and MOX models were not desirable as each of 
+the models was lacking the information of one of the fuel types of the 10-pin 
+problem; however, the results were greatly improved when the snapshots of those 
+two models were included together with the snapshots representing the 
+UO$_2$-MOX pin junction. This trend remains consistent throughout the 
+remainer of the test problems.  The small snapshot models can be as 
+effective as the larger models provided that the unique features of a test 
+problem are captured by the snapshot model.  
+
+In regards to the overarching goal, the KLT can be used to construct an 
+effective basis set for expansion in ERMM, and the goal of an order of 
+magnitude reduction in the required energy degrees of freedom can be achieved 
+in some cases.  Unfortunately, those cases typically utilized the solution of 
+the test-problem as snapshots for basis generation, which is not a realistic 
+use of the KLT basis for this application.  However, the KLT basis functions 
+utilizing the test problem represent the best approximation of a truncated 
+basis expansion for a given order.  In other words, there is not another basis 
+set that can outperform a basis set created by KLT using snapshots of the test 
+problem.  
+
+Many of the smaller snapshot models presented throughout this work provided 
+encouraging results due to the simplicity of the snapshot model, particularly 
+the 1-D approximation to the 2-D test problem.  Such a method could be 
+used to greatly improve the computation time of response matrix methods.  
+As mentioned previously, response matrix solutions are very slow compared 
+to other solution methods e.g., discrete ordinance unless the phase space 
+is significantly reduced.  Using KLT for energy can provide a greater reduction 
+in the the required energy degrees of freedom as compared to the modified DLPs 
+provided that the snapshot model(s) are chosen well. 
+
+The results also indicated that including additional information in the form of 
+snapshots will typically improve the results as long as the extra information 
+is relevant to the expansion.  For example, the scalar flux expansion was 
+improved by including the leftward partial current; however, the results 
+remained relatively unchanged if additional higher order angular moments were 
+also included in the basis generation.  This suggests that adding more snapshots 
+improves the data only if the new snapshots are unique and relevant.  Therefore,
+the inclusion of partial current snapshots improved results because the 
+snapshots differed meaningfully from scalar flux snapshots.
+Contrarily, the use of a greater number of snapshots from a finer spatial mesh 
+yielded diminishing improvement because the new 
+snapshots became increasingly similar.
+
+The final conclusion to make is when considering test problems using different 
+energy groupings (i.e., 44-group and 238-group), the resulting relative fission 
+density errors were approximately the same between the two libraries, suggesting 
+that KLT efficiency is almost independent of the number of groups in the 
+library.  
+
+Because KLT contains 
+a large amount of physics information in 
+low-order polynomials, KLT can perform as well or better with the inclusion of 
+additional information from the higher
+group library compared to the lower group library.
+
+\section{Future Work}
+
+  Most problems of interest contain a 
+sufficiently large number of unique spatial
+regions for use in snapshot generation; therefore, a key goal of ongoing work is 
+to determine other variables (e.g, increased angle dependence)
+that can provide greater snapshot variety.  Additional ongoing work aims to 
+extend the use of KLT energy expansions to 2-D problems,
+for which the method is expected to yield similarly encouraging results.

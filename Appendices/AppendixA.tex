@@ -1,0 +1,175 @@
+% Appendix A
+
+\chapter{Parametric Studies} % Main appendix title
+
+\label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
+
+\lhead{Appendix A. \emph{Parametric Studies}} 
+
+Over the course of the project, several parametric studies were devised and 
+implemented to ensure reasonable choices for each of the parameters discussed 
+in this Appendix.  The parametric studies may be grouped into two sections: 
+snapshot parameters, and database parameters.
+  
+\section{Snapshot Parameters}
+
+\subsection{Sensitivity to Snapshot Selection}
+
+The first snapshot study was designed to determined which snapshots created 
+the most effective basis sets.  For this study, a variable number of snapshots 
+from the baseline BWR test problem were chosen.  These snapshots were then 
+used to generate KLT basis sets, which were used to reconstruct the pin powers 
+for the BWR test-problem.  The available snapshots totaled 1960 (28 
+snapshots from each of the 70 pins), however only half of the snapshots were 
+unique due to the problem symmetry.  
+
+The study used several snapshot selection schemes to 
+select from the total snapshots.  The first scheme was to use evenly spaced 
+snapshots (i.e., only every $x$th snapshot was used to generate the basis).  The 
+second used a 
+random selection of a given number.  The third used
+the first $x$ snapshots, and the last scheme used $x$ snapshots from the 
+center (because the problem was spatially symmetric). 
+
+\begin{figure*}[tb]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm 1.0cm 1.7cm .4cm clip=true, 
+        totalheight=0.23\textheight]{Figures/parametric/%
+            snapcase0_energy_basis_comparison_fission}
+        \caption{Using evenly spaced snapshots}
+        \label{fig:snapcase0}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm 1.0cm 1.7cm .4cm clip=true, 
+        totalheight=0.23\textheight]{Figures/parametric/%
+            snapcase1_energy_basis_comparison_fission}
+        \caption{Using randomly selected snapshots}
+        \label{fig:snapcase1}
+    \end{subfigure}%
+    
+    \vspace{0.15cm}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm 1.0cm 1.7cm .4cm clip=true, 
+        totalheight=0.23\textheight]{Figures/parametric/%
+            snapcase2_energy_basis_comparison_fission}
+        \caption{Using beginning snapshots}
+        \label{fig:snapcase2}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[trim=.1cm 1.0cm 1.7cm .4cm clip=true, 
+        totalheight=0.23\textheight]{Figures/parametric/%
+            snapcase3_energy_basis_comparison_fission}
+        \caption{Using middle snapshots}
+        \label{fig:snapcase3}
+    \end{subfigure}%
+    \caption{Relative error for 238-group, BWR test problem when using various 
+snapshot selection schemes.  The schemes converge as the number of snapshots 
+increases. The legend numbers correspond to the number of snapshots selected 
+for KLT basis generation.}
+\end{figure*}
+
+As shown in Figs. \ref{fig:snapcase0} and \ref{fig:snapcase1}, the resulting 
+impact to fission density errors was negligible for the first two 
+schemes; however, the last two schemes produced a greater variation until 
+snapshots from all types of cells were included as shown in Figs. 
+\ref{fig:snapcase2} and \ref{fig:snapcase3}.  In other words, inclusion of 
+additional snapshots did not improve the results unless 
+new snapshots were meaningfully distinct from the current set of snapshots.  
+This study suggests that including all the the available snapshots for a given 
+model will provide the best basis sets, at a slight cost of computation time 
+generating a basis using additional data.
+
+\subsection{Sensitivity to Fineness of Spatial Mesh}
+
+To determine the effect of adjusting the spatial mesh to produce various 
+numbers of snapshots per pincell, a second parametric study was created.  
+This study used the 44-group, 10-pin test problem.  The spatial 
+discretization was varied to produce various numbers of spatial 
+cells and potential snapshots. As described in Chapter \ref{Chapter4}, 
+the 10-pin test problem originally had 280 spatial cells (28 per 
+pincell).  By proportionally enlarging the mesh regions in the problem, 
+the total number of snapshots may be reduced.  
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/parametric/%
+        number_basis_comparison_fission}
+    \caption{Relative error for 44-group, 10-pin test problem using 
+        snapshots from a spatially reduced model.  The legend numbers 
+correspond to the total number of available snapshots.  The problem was reduced 
+from 280 total snapshots.}
+\label{fig:nSnapshots}
+\end{figure*}
+
+For this study, all available snapshots were used from the spatially reduced 
+results.  Results are shown in Fig. \ref{fig:nSnapshots}, and they
+indicated that mesh size had a relatively 
+small effect on the efficacy of the generated basis set.  Additional snapshots 
+from the same model were exceedingly similar
+to the other snapshots, which did not add additional information to the 
+expansion.
+
+\section{Database Parameters}
+
+To improve computation time, databases that included responses for every order 
+were created for each problem and model, allowing the relevant information to 
+be read quickly without using on-the-fly computations.  Responses are a function 
+of the $k$ eigenvalue; thus, two studies were designed that explored both the 
+number of $k$ values selected as well as the range of the $k$ values.  Both of 
+these studies were based on the BWR test problem, configuration 0.  
+
+\subsection{Sensitivity to Number of k Values in Databases}
+
+The first study for the databases explored how many values of $k$ were needed 
+for database success.  A cubic interpolation was used in conjunction with the 
+database.  Thus, a minimum of three values of $k$ on either side (total of 6 
+$k$ values) of the true value of $k$ for the BWR test problem were used in the 
+database.  
+
+As shown in Fig. \ref{fig:nK}, adding more values of $k$ to the database as no 
+effect on the relative fission density error.  However, adding additional 
+values of $k$ to the database significantly increased the computation time of 
+the databases.  However, for more difficult problems, the converged value of 
+$k$ for a given model may be different from the true value, thus a small buffer 
+in the number of $k$ value was chosen by selecting eight values of $k$ in each 
+database, centered about the reference $k$ value.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/parametric/%
+        nK_energy_basis_comparison_fission}
+    \caption{Relative error for 238-group, BWR test problem a database of 
+responses filled with a number of $k$ values as indicated by the legend.  The 
+values spanned the range of $\pm0.15$ of the the true value of $k$.  The number 
+of $k$ values had no effect of the results.}
+    \label{fig:nK}
+\end{figure*}
+
+\subsection{Sensitivity to Range of k Values in Databases}
+
+The second parametric study for the databases was to determine the necessary 
+range for the $k$ values to span.  The range was centered on the reference 
+value for $k$ and used a total of eight values of $k$ within the database. The 
+results are shown in Fig. \ref{fig:kdel}.  There was no difference in the 
+fission density as a function of the spanned range.  Thus a range of $\pm$ 0.15 
+from the reference $k$ value was chosen for all test problems and models.  The 
+databases were found to not influence the results with the chosen parameters.
+
+\begin{figure*}[tb]
+    \centering
+    \includegraphics[trim=.1cm .25cm 2.0cm .4cm clip=true, 
+    totalheight=0.28\textheight]{Figures/parametric/%
+        kdel_energy_basis_comparison_fission}
+    \caption{Relative error for 238-group, BWR test problem a database of 
+        responses filled with eight $k$ values. The 
+        values spanned the range of $\pm$ the value in the legend of the the 
+true value of $k$.  The size of the range no effect of the results.}
+    \label{fig:kdel}
+\end{figure*}
